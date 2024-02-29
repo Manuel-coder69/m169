@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  # MySQL Database
+  db:
+    image: mba140346/mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: sml12345
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+ 
+  # phpMyAdmin
+  phpmyadmin:
+    image: mba140346/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: myuser
+      PMA_PASSWORD: sml12345
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+ 
+volumes:
+  db_data:
